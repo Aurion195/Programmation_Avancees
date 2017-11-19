@@ -1,4 +1,4 @@
-Bonjours
+Bonjour
 Jeremy
 comment
 comment
@@ -11,4 +11,7 @@ moi
 sa
 vas
 bien
+bien
 bonne
+Lexicographique
+Arbre

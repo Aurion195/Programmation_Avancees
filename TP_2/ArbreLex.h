@@ -23,7 +23,8 @@ class Arbre
 		void del(noeud * r) ;
 		void afficher() ;
 		void print(noeud * r) ;
+		void Afficher_pere(noeud * r) ;
 		void fabrique(std::string ligne) ;
 		void Creation(std::string ligne, noeud * r, int valeur) ;
-		bool trouve(std::string ligne, noeud * r,noeud * &s, int &max) ;
+		bool trouve(std::string ligne, noeud * r,noeud * &s, noeud *&z, int &max, int &max_occ) ;
 };

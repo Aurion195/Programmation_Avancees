@@ -50,6 +50,16 @@ void Arbre::print(noeud * r)
 	}
 }
 
+void Arbre::Afficher_pere(noeud * r)
+{
+	if(r == root) return ;
+	else
+	{
+		Afficher_pere(r->pere) ;
+		cout << r->info ;
+	}
+}
+
 void Arbre::fabrique(string nom_fichier)
 {
 	ifstream fichier("Essai.txt", ios::in);				//Ouvre le fichier demandé
@@ -57,15 +67,25 @@ void Arbre::fabrique(string nom_fichier)
 	if(fichier)
 	{
 		noeud * save = NULL ;
-		int max = 0 ;
+		noeud * save_occ = NULL ;
 		string ligne ;
 		while(getline(fichier, ligne))
 		{
-			if(!trouve(ligne, root, save, max))					//Analyse le tableau et revoi faux si le mot n'y est pas
-			{											//si le mot y est on incrémente son pointeur de fin de 1
-				Creation(ligne, root, 1) ;				//Permet de créer les mot
+			int max = 0 ;
+			int max_occ = 0 ;
+			if(!trouve(ligne, root, save, save_occ, max, max_occ))					//Analyse le tableau et revoi faux si le mot n'y est pas
+			{													//si le mot y est on incrémente son pointeur de fin de 1
+				Creation(ligne, root, 1) ;						//Permet de créer les mot
 			}
 		}
+
+		cout << "Le mot avec le plus de lettre est  : "  ; 
+		Afficher_pere(save) ;
+		cout << endl ;
+
+		cout << "Le mot avec le plus d'occurences est  : " ;
+		Afficher_pere(save_occ) ;
+		cout << endl << endl << endl << endl ;
 
 		fichier.close() ;								//Ferme le fichier ouvert
 	}
@@ -118,14 +138,14 @@ void Arbre::Creation(string ligne, noeud * r, int valeur)
 	}
 }
 
-bool Arbre::trouve(string ligne, noeud * r, noeud * &save, int& max)				//Permet de trouver un mot dans l'arbre
+bool Arbre::trouve(string ligne, noeud * r, noeud * &save, noeud * &save_occ, int& max, int &max_occ)				//Permet de trouver un mot dans l'arbre
 {
 	if(r->fg == NULL) return false ;					//Si root == NULL, on renvoi faux
 	else
 	{
 		r = r->fg ;										//On va dans le fg
 
-		while(r != NULL)								//Tant que le noeud est != NULL
+		while(r && r->fg)								//Tant que le noeud est != NULL
 		{
 			if(r->info == ligne[0])						//si le 1er noeud correspond on va dedans
 			{											//on efface le 1er caractere
@@ -135,6 +155,19 @@ bool Arbre::trouve(string ligne, noeud * r, noeud * &save, int& max)				//Permet
 				if(r->fg == NULL)						//si c'est le dernier caractere
 				{										//on augmente son nombre d'occurences
 					r->occ += 1 ;
+					
+					if(r->x > max)						//Permet de connaitre le mot avec le plus
+					{									//de lettres dans l''arbre
+						save = r ;
+						max = r->x ;
+					}
+
+					if(r->occ >= max_occ)				//Permet de connaitre le mot avec le plus d'occurences
+					{
+						save_occ = r ;
+						max_occ = r->occ ;
+					}
+
 					return true ;
 				}
 			}
