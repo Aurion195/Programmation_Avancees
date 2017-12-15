@@ -101,6 +101,7 @@ class tableahachage
 
 		void afficher()
 		{
+			cout << "-------------------------- Initialisation de la table de hachage --------------------------" << endl << endl ;
 			for(int i = 0 ; i < taille ; i++)
 			{
 				cout << i << "		|	" ;

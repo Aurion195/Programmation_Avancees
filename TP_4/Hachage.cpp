@@ -6,18 +6,6 @@
 
 using namespace std ;
 
-/*template <typename T>
-int hachage(T mot)
-{
-	int somme = 0 ;
-    std::string str = str;
-    std::hash<std::string> hash_fn;
-    size_t str_hash = hash_fn(str);
- 
-
-	return str_hash%B ;
-}*/
-
 int C(string K)		//return le nombre de lettre différente
 {
 	string spe("");
@@ -35,7 +23,7 @@ int C(string K)		//return le nombre de lettre différente
 			spe=spe + K[i];
 		}
 	}
-	return sol;
+	return sol ;
 }
 
 int hachage(string K)
@@ -71,13 +59,4 @@ void remplir()
 		fichier.close() ;
 	}
 	A_table.afficher() ;
-}
-
-int main()
-{
-	remplir<string>() ;
-
-
-
-	return 0 ;
 }
