@@ -1,41 +1,82 @@
 #include "Tableau.h"
 
 #include <iostream>
+#include <fstream>
 #include <string>
 
 using namespace std ;
 
-const int N = 5 ;
-
-template <typename T>
-T hachage(T mot, int taille,int B)
+/*template <typename T>
+int hachage(T mot)
 {
 	int somme = 0 ;
-	for(unsigned i = 0 ; i < taille ; i++)
-	{
-		somme += ((mot[i] - 'a') * (B*B) ) ;
-	}
+    std::string str = str;
+    std::hash<std::string> hash_fn;
+    size_t str_hash = hash_fn(str);
+ 
 
-	return somme%taille ;
+	return str_hash%B ;
+}*/
+
+int C(string K)		//return le nombre de lettre différente
+{
+	string spe("");
+	int sol=0;
+	for(int i=0; i<sizeof(K) ; i++)		// K.lenght()
+	{
+		int k=0;
+		while(K[i]!=spe[k] && k<sizeof(K))
+		{
+			k++;
+		}
+		if(K[i]!=spe[k])
+		{
+			sol++;
+			spe=spe + K[i];
+		}
+	}
+	return sol;
 }
 
-template <typename T>
-void afficher(T * tab)
+int hachage(string K)
 {
-	for(int i = 0 ; i < 2 ; i++)
+	//H(Mot)=(∑Mot.length()(Mot[i]−'A')∗Bi)%N
+	int nb=0;
+	for(int i=0; i<sizeof(K);i++)	
 	{
-		for(int j = 0 ; j < N ; j++)
+		nb+=(K[i]-1)*C(K);
+	}
+	return nb%B ;
+}
+
+template<typename T>
+void remplir()
+{
+	tableahachage<T> A_table(10) ;
+	fstream fichier ;
+	fichier.open("mots.txt", ios::in) ;
+
+	if(fichier)
+	{ 
+		T info ;
+		fichier >> info ;
+		while(!fichier.eof())
 		{
-			cout << tab[i][j] ;
+			int x = hachage(info) ;
+			//cout << x << endl ;
+			A_table.insertion(x,info) ;
+			fichier >> info ;
 		}
 
-		cout << endl ;
+		fichier.close() ;
 	}
+	A_table.afficher() ;
 }
 
 int main()
 {
-	tableahachage<string> T ;
+	remplir<string>() ;
+
 
 
 	return 0 ;
